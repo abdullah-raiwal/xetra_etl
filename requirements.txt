@@ -1,0 +1,4 @@
+boto3==1.18.60
+azure-storage-blob==12.9.0
+pandas==1.3.0
+pyyaml==5.3.1

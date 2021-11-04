@@ -1,0 +1,57 @@
+# s3 configs
+
+s3:
+   src_bucket_name: 'deutsche-boerse-xetra-pds'
+   service_name : 's3'
+#blob config
+
+blob:
+    conn_str: 'DefaultEndpointsProtocol=https;AccountName=xetratl;AccountKey=uVTwzEe5IA2+Pf8xlBR9gxDXvLrzNLc3bjh3oQnMXGFyfesQMK44f2UB9XVNbLiCTofAP8vMeBxjW+cO1GyRyA==;EndpointSuffix=core.windows.net'
+    container: 'processed'
+
+# configs related to source dataframe
+
+source:
+    src_first_extract_date: '2021-11-03'
+    columns: ['ISIN', 'Mnemonic', 'Date', 'Time', 'StartPrice', 'EndPrice', 'MinPrice', 'MaxPrice', 'TradedVolume']
+    date: 'Date'
+    isin: 'ISIN'
+    time: 'Time'
+    start_price: 'StartPrice'
+    max_price: 'MaxPrice'
+    min_price: 'MinPrice'
+    traded_vol: 'TradedVolume'
+
+# configs specfic to target
+target:
+  key: 'report1/xetra_daily_report1_'
+  key_date_format: '%Y-%m-%d_%H-%M-%S'
+  format: 'parquet'
+  isin: 'isin'
+  date: 'date'
+  op_price: 'opening_price_eur'
+  clos_price: 'closing_price_eur'
+  min_price: 'minimum_price_eur'
+  max_price: 'max_price_eur'
+  daily_traded_vol: 'daily_traded_vol'
+  prev_clos: 'change_prev_closing%'
+
+# meta configs
+
+meta:
+  meta_key : 'meta_file.csv'
+
+# Logging configuration
+logging:
+  version: 1
+  formatters:
+    xetra:
+      format: "Xetra Transformer - %(asctime)s - %(levelname)s - %(message)s"
+  handlers:
+    console:
+      class: logging.StreamHandler
+      formatter: xetra
+      level: DEBUG
+  root:
+    level: DEBUG
+    handlers: [ console ]
